@@ -1,13 +1,22 @@
-import * as Unicons from '@iconscout/react-unicons';
+// import * as Unicons from '@iconscout/react-unicons';
+import { useState } from 'react';
+import TopCities from './components/TopCities';
 
 const App = () => {
+	const [currentCity, setCurrentCity] = useState('');
+
 	return (
-		<div className='box-border flex flex-col items-center justify-center p-16'>
-			<h1 className='text-3xl font-bold text-blue-600'>Hello, world!</h1>
-			<h1 className='my-10 text-xl italic text-red-600'>
-				Tailwind and Unicons are setup correctly ...
-			</h1>
-			<Unicons.UilReact size='140' color='#61DAFB' />
+		<div className='box-border flex min-h-screen flex-col items-center scroll-smooth bg-gradient-to-br from-cyan-500 to-sky-600 pt-4 sm:px-4 md:px-6 lg:px-12 xl:px-16 2xl:px-20'>
+			{/* Display Favorite cities */}
+			<TopCities setCurrentCity={setCurrentCity} />
+
+			{/* Display selected city name */}
+			{currentCity && (
+				<div className='mt-8 text-center'>
+					currently looking for weather in "
+					{<span className='text-lg font-bold text-white'>{currentCity}</span>}"
+				</div>
+			)}
 		</div>
 	);
 };
