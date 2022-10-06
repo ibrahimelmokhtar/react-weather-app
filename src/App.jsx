@@ -1,8 +1,8 @@
 // import * as Unicons from '@iconscout/react-unicons';
 import { useEffect, useState } from 'react';
-import TimeAndLocation from './components/TimeAndLocation';
 import TopCities from './components/TopCities';
 import UserInput from './components/UserInput';
+import TemperatureDetails from './components/TemperatureDetails';
 
 const App = () => {
 	const [currentCity, setCurrentCity] = useState('');
@@ -28,8 +28,8 @@ const App = () => {
 			{/* Display search bar */}
 			<UserInput currentCity={currentCity} setCurrentCity={setCurrentCity} />
 
-			{/* Display selected city name */}
-			{currentCity && <TimeAndLocation currentCity={currentCity} />}
+			{/* Display selected city details */}
+			{currentCity && <TemperatureDetails currentCity={currentCity} />}
 		</div>
 	);
 };
