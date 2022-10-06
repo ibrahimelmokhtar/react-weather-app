@@ -36,7 +36,7 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 	};
 
 	return (
-		<div className='my-6 flex w-full flex-col items-center justify-center'>
+		<div className='mt-3 mb-6 flex w-full flex-col items-center justify-center'>
 			<div className='focus: flex items-center justify-center'>
 				{/* User Input Field */}
 				<input

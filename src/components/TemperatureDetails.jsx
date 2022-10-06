@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import Forecast from './Forecast';
 import WeatherDetail from './WeatherDetail';
 
 const TemperatureDetails = ({ currentCity }) => {
 	const [isCelsius, setIsCelsius] = useState(true);
+
+	const fakeData = [1, 2, 3, 4, 5];
 
 	const handleDegree = (event) => {
 		let degreeUnit = '';
@@ -20,9 +23,9 @@ const TemperatureDetails = ({ currentCity }) => {
 	return (
 		<div className='w-full max-w-3xl px-6 text-center'>
 			{/* Date and time */}
-			<div className='flex items-center justify-center text-lg font-light'>
-				<p className='mr-10'>Thursday, 6 October 2022</p>
-				<p>Local Time: 12:45 AM</p>
+			<div className='flex items-center justify-center text-base font-extralight'>
+				<p className='mr-8'>Thursday, 6 October 2022</p>
+				<p>Local Time: 13:45</p>
 			</div>
 
 			{/* City name */}
@@ -33,7 +36,7 @@ const TemperatureDetails = ({ currentCity }) => {
 				{/* Weather description */}
 				<h3 className='text-xl font-medium capitalize text-indigo-600'>Cold</h3>
 
-				<div className='mt-3 flex w-full items-center justify-between'>
+				<div className='my-3 flex w-full items-center justify-between'>
 					{/* Weather Icon Image  */}
 					<img
 						src={'https://openweathermap.org/img/wn/01d@2x.png'}
@@ -44,11 +47,11 @@ const TemperatureDetails = ({ currentCity }) => {
 					{/* Weather Temperature */}
 					<div className='flex items-center justify-center text-lg capitalize'>
 						<span className='mr-4 text-5xl'>31&deg;</span>
-						<div>
+						<div className='font-light'>
 							<span
 								id='celsius'
 								className={`cursor-pointer ${
-									isCelsius ? 'text-2xl' : 'text-gray-300'
+									isCelsius ? 'text-2xl font-normal' : 'text-gray-300'
 								} `}
 								onClick={handleDegree}
 							>
@@ -58,7 +61,7 @@ const TemperatureDetails = ({ currentCity }) => {
 							<span
 								id='fahrenheit'
 								className={`cursor-pointer ${
-									isCelsius ? 'text-gray-300' : 'text-2xl'
+									isCelsius ? 'text-gray-300' : 'text-2xl font-normal'
 								} `}
 								onClick={handleDegree}
 							>
@@ -68,7 +71,7 @@ const TemperatureDetails = ({ currentCity }) => {
 					</div>
 
 					{/* Weather extra info: Part 1 */}
-					<div className='my-4 flex flex-col items-start'>
+					<div className='flex flex-col items-start'>
 						<WeatherDetail
 							iconName='UilTemperature'
 							title='real feel'
@@ -94,13 +97,13 @@ const TemperatureDetails = ({ currentCity }) => {
 					<WeatherDetail
 						iconName='UilSun'
 						title='rise'
-						value={'04:50 AM'}
+						value={'04:50'}
 						type='time'
 					/>
 					<WeatherDetail
 						iconName='UilSunset'
 						title='set'
-						value={'07:09 PM'}
+						value={'19:09'}
 						type='time'
 					/>
 					<WeatherDetail
@@ -117,6 +120,12 @@ const TemperatureDetails = ({ currentCity }) => {
 					/>
 				</div>
 			</div>
+
+			{/* Hourly forecast details */}
+			<Forecast title='hourly' forecastData={fakeData} />
+
+			{/* Daily forecast details */}
+			<Forecast title='daily' forecastData={fakeData} />
 		</div>
 	);
 };
