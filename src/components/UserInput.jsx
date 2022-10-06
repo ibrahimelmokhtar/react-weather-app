@@ -14,15 +14,8 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 		// Modify error message for city name
 		setIsCityEmpty(false);
 
-		// Modify entered city name
-		const searchCity = event.target.value
-			.split(' ')
-			.map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)} `)
-			.join('')
-			.trim();
-
 		// Set current city:
-		setCurrentCity(searchCity);
+		setCurrentCity(event.target.value);
 	};
 
 	// Handle click on search icon
@@ -30,14 +23,6 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 		if (currentCity) {
 			// Modify error message for city name
 			setIsCityEmpty(false);
-
-			// Fetch data for the captured city name
-			console.log(
-				`Collect weather data about (${currentCity}) using Weather API`
-			);
-
-			// Clear input field
-			setCurrentCity('');
 		} else {
 			// Modify error message for city name
 			setIsCityEmpty(true);
@@ -59,7 +44,7 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 					name='city'
 					id='search-city'
 					placeholder='Search By City Name ...'
-					className='w-80 rounded border-2 py-1 px-2 capitalize shadow-xl placeholder:lowercase focus:outline-none'
+					className='w-80 rounded border-2 py-1 px-2 capitalize text-black shadow-xl placeholder:lowercase focus:outline-none'
 					value={currentCity}
 					onChange={handleChange}
 				/>

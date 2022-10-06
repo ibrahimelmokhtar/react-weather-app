@@ -13,7 +13,7 @@ const TopCities = ({ setCurrentCity }) => {
 				{cities.map((city, index) => (
 					<li
 						key={index + 1}
-						className='mr-3 mt-2 cursor-pointer rounded border-2 bg-gray-500 py-1 px-2 text-lg font-medium capitalize text-white transition-colors duration-500 last:mr-0 hover:bg-gray-700'
+						className='mr-3 mt-2 cursor-pointer rounded border-2 bg-gray-500 py-1 px-2 text-base font-normal capitalize text-white transition-colors duration-500 last:mr-0 hover:bg-gray-700'
 						title={`Search For ${city}`}
 						onClick={handleClick}
 					>
