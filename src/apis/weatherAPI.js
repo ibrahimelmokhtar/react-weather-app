@@ -22,17 +22,43 @@ const constructURL = (infoType='weather', searchParams={}) => {
  * @param {String} currentCity
  * @returns {Object} Coordinates containing both Latitude and Longitude
  */
-const getCityCoordinates = async (currentCity) => {
+const getCurrentDetails = async (currentCity, degreeUnit) => {
     let weatherData = null;
     try {
         // Construct specific URL
-        const url = constructURL('weather', { q: currentCity })
+        const url = constructURL('weather', { q: currentCity, units: degreeUnit })
 
         // Fetch weather data
         weatherData = await fetch(url).then(res => res.json()).then(data => data);
     } catch (error) {}
 
-    return weatherData.coord ?? null;
+    const {
+        coord,
+        dt,
+        main: { feels_like, humidity, temp, temp_min, temp_max },
+        wind: { speed },
+        sys: { sunrise, sunset, country },
+        name,
+        weather: [{ description , icon }],
+
+    } = weatherData;
+
+    return {
+        coord,
+        dt,
+        feels_like,
+        humidity,
+        temp,
+        temp_min,
+        temp_max,
+        speed,
+        sunrise,
+        sunset,
+        country,
+        name,
+        description,
+        icon
+    };
 };
 
 /**
@@ -41,20 +67,26 @@ const getCityCoordinates = async (currentCity) => {
  * @returns {Object} Weather data
  */
 export const getWeatherData = async (currentCity, degreeUnit) => {
-    let weatherData = null;
+    let fullWeatherData = null;
     try {
         // Obtain city coordinates
-        const coords = await getCityCoordinates(currentCity);
+        const weatherData = await getCurrentDetails(currentCity, degreeUnit);
 
         // Exclude specific info while retrieving weather data
-        const excludedParts = ['minutely', 'alerts'].join(',');
+        const excludedParts = ['current', 'minutely', 'alerts'].join(',');
 
         // Construct specific URL
-        const url = constructURL('onecall', { lat: coords.lat, lon: coords.lon, exclude: excludedParts, units: degreeUnit })
+        const url = constructURL('onecall', { lat: weatherData.coord.lat, lon: weatherData.coord.lon, exclude: excludedParts, units: degreeUnit })
 
         // Fetch weather data
-        weatherData = await fetch(url).then(res => res.json()).then(data => data);
+        const {
+            timezone,
+            hourly,
+            daily,
+        } = await fetch(url).then(res => res.json()).then(data => data);
+
+        fullWeatherData = {...weatherData, timezone, hourly, daily };
     } catch (error) {}
 
-    return weatherData;
+    return fullWeatherData;
 };

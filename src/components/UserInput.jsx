@@ -36,15 +36,15 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 	};
 
 	return (
-		<div className='mt-3 mb-6 flex w-full flex-col items-center justify-center'>
-			<div className='focus: flex items-center justify-center'>
+		<div className='mt-3 mb-6 flex flex-col flex-wrap items-center justify-center'>
+			<div className='flex flex-wrap items-center justify-center'>
 				{/* User Input Field */}
 				<input
 					type='search'
 					name='city'
 					id='search-city'
 					placeholder='Search By City Name ...'
-					className='w-80 rounded border-2 py-1 px-2 capitalize text-black shadow-xl placeholder:lowercase focus:outline-none'
+					className='w-72 rounded border-2 py-1 px-2 capitalize text-black shadow-xl placeholder:lowercase focus:outline-none'
 					value={currentCity}
 					onChange={handleChange}
 				/>
@@ -53,7 +53,7 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 				<button
 					type='button'
 					title='Search City'
-					className='mx-4 cursor-pointer text-white transition-colors hover:text-gray-200'
+					className='mx-2 cursor-pointer p-2 text-white transition-colors hover:text-gray-200'
 					onClick={handleSearch}
 				>
 					<UilSearch size={25} />
@@ -63,7 +63,7 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 				<button
 					type='button'
 					title='Use Current Location'
-					className='cursor-pointer text-white transition-colors hover:text-gray-200'
+					className='cursor-pointer p-2 text-white transition-colors hover:text-gray-200'
 					onClick={handleLocation}
 				>
 					<UilLocationPoint size={25} />

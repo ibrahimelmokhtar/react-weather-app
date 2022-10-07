@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import Forecast from './Forecast';
 import WeatherDetail from './WeatherDetail';
+import WeatherDateTime from './WeatherDateTime';
 
-const TemperatureDetails = ({ currentCity, setDegreeUnit }) => {
+const TemperatureDetails = ({ weatherData, setDegreeUnit }) => {
 	const [isCelsius, setIsCelsius] = useState(true);
-
-	const fakeData = [1, 2, 3, 4, 5];
 
 	const handleDegree = (event) => {
 		if (event.target.id === 'celsius') {
@@ -20,31 +19,37 @@ const TemperatureDetails = ({ currentCity, setDegreeUnit }) => {
 	return (
 		<div className='w-full max-w-3xl px-6 text-center'>
 			{/* Date and time */}
-			<div className='flex items-center justify-center text-base font-extralight'>
-				<p className='mr-8'>Thursday, 6 October 2022</p>
-				<p>Local Time: 13:45</p>
+			<div className='flex flex-wrap items-center justify-center text-base font-light'>
+				<WeatherDateTime
+					timestamp={weatherData.dt}
+					timezone={weatherData.timezone}
+				/>
 			</div>
 
 			{/* City name */}
-			<h2 className='my-3 text-3xl font-semibold capitalize'>{currentCity}</h2>
+			<h2 className='my-3 text-3xl font-semibold capitalize'>{`${weatherData.name}, ${weatherData.country}`}</h2>
 
 			{/* Weather details */}
 			<div className='flex flex-col items-center justify-center'>
 				{/* Weather description */}
-				<h3 className='text-xl font-medium capitalize text-indigo-600'>Cold</h3>
+				<h3 className='text-xl font-medium capitalize text-indigo-600'>
+					{weatherData.description}
+				</h3>
 
-				<div className='my-3 flex w-full items-center justify-between'>
+				<div className='my-3 flex flex-wrap items-center justify-between text-center'>
 					{/* Weather Icon Image  */}
 					<img
-						src={'https://openweathermap.org/img/wn/01d@2x.png'}
+						src={`https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`}
 						alt='Weather Icon'
 						className='w-24'
 					/>
 
 					{/* Weather Temperature */}
-					<div className='flex items-center justify-center text-lg capitalize'>
-						<span className='mr-4 text-5xl'>31&deg;</span>
-						<div className='font-light'>
+					<div className='flex items-center justify-between p-3 text-lg capitalize'>
+						<span className='text-5xl'>
+							{Math.round(weatherData.temp)}&deg;
+						</span>
+						<div className='p-2 font-light'>
 							<span
 								id='celsius'
 								className={`cursor-pointer ${
@@ -72,57 +77,67 @@ const TemperatureDetails = ({ currentCity, setDegreeUnit }) => {
 						<WeatherDetail
 							iconName='UilTemperature'
 							title='real feel'
-							value={'33'}
+							value={Math.round(weatherData.feels_like)}
 							type='degree'
 						/>
 						<WeatherDetail
 							iconName='UilTear'
 							title='humidity'
-							value={'65%'}
+							value={Math.round(weatherData.humidity)}
 							type='percentage'
 						/>
 						<WeatherDetail
 							iconName='UilWind'
 							title='wind'
-							value={'11 km/h'}
+							value={Math.round(weatherData.speed)}
 							type='speed'
+							isCelsius={isCelsius}
 						/>
 					</div>
 				</div>
+
 				{/* Weather extra info: Part 2 */}
-				<div className='flex items-center justify-between'>
+				<div className='flex flex-wrap items-center justify-between'>
 					<WeatherDetail
 						iconName='UilSun'
 						title='rise'
-						value={'04:50'}
+						value={{ dt: weatherData.sunrise, timezone: weatherData.timezone }}
 						type='time'
 					/>
 					<WeatherDetail
 						iconName='UilSunset'
 						title='set'
-						value={'19:09'}
+						value={{ dt: weatherData.sunset, timezone: weatherData.timezone }}
 						type='time'
 					/>
 					<WeatherDetail
 						iconName='UilArrowUp'
 						title='high'
-						value={'35'}
+						value={Math.round(weatherData.temp_max)}
 						type='degree'
 					/>
 					<WeatherDetail
 						iconName='UilArrowDown'
 						title='low'
-						value={'19'}
+						value={Math.round(weatherData.temp_min)}
 						type='degree'
 					/>
 				</div>
 			</div>
 
 			{/* Hourly forecast details */}
-			<Forecast title='hourly' forecastData={fakeData} />
+			<Forecast
+				title='hourly'
+				forecastData={weatherData.hourly}
+				timezone={weatherData.timezone}
+			/>
 
 			{/* Daily forecast details */}
-			<Forecast title='daily' forecastData={fakeData} />
+			<Forecast
+				title='daily'
+				forecastData={weatherData.daily}
+				timezone={weatherData.timezone}
+			/>
 		</div>
 	);
 };

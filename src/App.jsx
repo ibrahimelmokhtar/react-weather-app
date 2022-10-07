@@ -17,7 +17,6 @@ const App = () => {
 				try {
 					const data = await weatherAPI.getWeatherData(currentCity, degreeUnit);
 					setWeatherData(data);
-					console.log(data);
 				} catch (error) {
 					setWeatherData(null);
 				}
