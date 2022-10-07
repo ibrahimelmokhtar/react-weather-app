@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TopCities = ({ setCurrentCity }) => {
-	const cities = ['Egypt', 'Riyadh', 'Abu Dhabi', 'London', 'Madrid', 'Oslo'];
+	const cities = ['Cairo', 'Riyadh', 'Abu Dhabi', 'London', 'Madrid', 'Oslo'];
 
 	const handleClick = (event) => {
 		setCurrentCity(event.target.innerText);

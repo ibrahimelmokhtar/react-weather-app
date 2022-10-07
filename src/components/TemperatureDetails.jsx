@@ -2,22 +2,19 @@ import React, { useState } from 'react';
 import Forecast from './Forecast';
 import WeatherDetail from './WeatherDetail';
 
-const TemperatureDetails = ({ currentCity }) => {
+const TemperatureDetails = ({ currentCity, setDegreeUnit }) => {
 	const [isCelsius, setIsCelsius] = useState(true);
 
 	const fakeData = [1, 2, 3, 4, 5];
 
 	const handleDegree = (event) => {
-		let degreeUnit = '';
 		if (event.target.id === 'celsius') {
 			setIsCelsius(true);
-			degreeUnit = 'metric';
+			setDegreeUnit('metric');
 		} else {
 			setIsCelsius(false);
-			degreeUnit = 'imperial';
+			setDegreeUnit('imperial');
 		}
-
-		console.log(`Obtain ${degreeUnit} temperature`);
 	};
 
 	return (
