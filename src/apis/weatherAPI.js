@@ -18,6 +18,25 @@ const constructURL = (infoType='weather', searchParams={}) => {
 };
 
 /**
+ * @description Obtain city name from specific geo-coordinates
+ * @param {Number} lat
+ * @param {Number} lon
+ * @returns {String} City name
+ */
+export const getCityNameFromCoords = async (lat, lon) => {
+    let cityName = null;
+    try {
+        // Construct specific URL
+        const url = constructURL('weather', { lat: lat, lon: lon });
+
+        // Fetch city name
+        cityName = await fetch(url).then(res => res.json()).then(data => data.name);
+    } catch (error) {}
+
+    return cityName;
+};
+
+/**
  * @description Obtain coordinates of specific city
  * @param {String} currentCity
  * @returns {Object} Coordinates containing both Latitude and Longitude

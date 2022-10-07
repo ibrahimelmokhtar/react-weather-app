@@ -4,6 +4,7 @@ import {
 	UilLocationPoint,
 	UilExclamationTriangle,
 } from '@iconscout/react-unicons';
+import { getCityNameFromCoords } from '../apis/weatherAPI';
 
 const UserInput = ({ currentCity, setCurrentCity }) => {
 	// Used to display error message when the city name is empty
@@ -31,8 +32,21 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 
 	// Handle click on location icon
 	const handleLocation = () => {
+		const success = (position) => {
+			const { latitude: lat, longitude: lon } = position.coords;
+			getCityNameFromCoords(lat, lon).then((cityName) => {
+				setCurrentCity(cityName);
+			});
+
+			// setCurrentCity(cityName);
+		};
+
 		// Fetch data for the current location
-		console.log('Obtain current location using Geolocation API');
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(success);
+		} else {
+			console.log('Can NOT access geolocation');
+		}
 	};
 
 	return (
