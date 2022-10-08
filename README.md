@@ -1,10 +1,69 @@
-# Getting Started with Create React App
+# Weather Journal App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Table of Contents
+
+- [Weather Journal App](#weather-journal-app)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Available Scripts](#available-scripts)
+    - [`npm install`](#npm-install)
+    - [`npm start`](#npm-start)
+  - [Available Routes](#available-routes)
+    - [`Home` Page](#home-page)
+  - [Backend Server](#backend-server)
+    - [`Get City Name`](#get-city-name)
+    - [`Get Weather Data`](#get-weather-data)
+  - [Installed NPM Packages](#installed-npm-packages)
+    - [Production Packages](#production-packages)
+    - [Development Packages](#development-packages)
+  - [Useful Resources](#useful-resources)
+  - [Credits & Assets](#credits--assets)
+
+## Installation
+
+[(Back to top)](#table-of-contents)
+
+To use this project locally, you need to follow the commands below:
+
+1. Clone the repository into your local machine:
+
+   ```bash
+   git clone https://github.com/ibrahimelmokhtar/react-weather-app.git
+   ```
+
+2. Redirect inside the cloned repository:
+
+   ```bash
+   cd react-weather-app/
+   ```
+
+3. Install the required packages:
+
+   ```bash
+   npm install
+   ```
+
+4. Copy `example.env` file into `.env` file.
+5. Fill the created `.env` file with corresponding/appropriate information.
+6. Start local server:
+
+   ```bash
+   npm start
+   ```
+
+7. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
 ## Available Scripts
 
+[(Back to top)](#table-of-contents)
+
 In the project directory, you can run:
+
+### `npm install`
+
+Installs the project's dependencies to start working with the code.
 
 ### `npm start`
 
@@ -14,57 +73,91 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Available Routes
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[(Back to top)](#table-of-contents)
 
-### `npm run build`
+### `Home` Page
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Searches for weather at specific city name then Displays the obtained weather information.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Backend Server
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[(Back to top)](#table-of-contents)
 
-### `npm run eject`
+All API calls are made using [OpenWeatherMap API](https://openweathermap.org/api), as follows:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `Get City Name`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Get city name from geo-location (longitude, latitude) information.
+- Method Signature:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  ```javascript
+  getCityNameFromCoords(lat, lon);
+  ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Arguments:
+  - `lat`: `Number` Latitude coordinate of desired city.
+  - `lon`: `Number` Longitude coordinate of desired city.
 
-## Learn More
+- Returns:
+  - `cityName`: `String` Desired city name.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `Get Weather Data`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Get weather data for specific city name using specific measurement unit (metric, or imperial).
+- Method Signature:
 
-### Code Splitting
+  ```javascript
+  getWeatherData(currentCity, degreeUnit);
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Arguments:
+  - `currentCity`: `String` City name to search for.
+  - `degreeUnit`: `String` desired measurement unit.
 
-### Analyzing the Bundle Size
+- Returns:
+  - `fullWeatherData`: `Object` Obtained weather data after filtering desired information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Installed NPM Packages
 
-### Making a Progressive Web App
+[(Back to top)](#table-of-contents)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+These packages are required to run this project smoothly without any errors.
 
-### Advanced Configuration
+### Production Packages
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+These packages can be found in the `"dependencies"` object inside the `package.json` file.
 
-### Deployment
+- [@iconscout/react-unicons](https://www.npmjs.com/package/@iconscout/react-unicons) - 1100+ vector icons as easy to use React Components.
+- [luxon](https://www.npmjs.com/package/luxon) - Immutable date wrapper.
+- [react-toastify](https://www.npmjs.com/package/react-toastify) - React notification made easy.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Development Packages
 
-### `npm run build` fails to minify
+These packages can be found in the `"devDependencies"` object inside the `package.json` file.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [prettier](https://www.npmjs.com/package/prettier) - Prettier is an opinionated code formatter.
+- [prettier-plugin-tailwindcss](https://www.npmjs.com/package/prettier-plugin-tailwindcss) - A Prettier plugin for sorting Tailwind CSS classes.
+- [tailwindcss](https://www.npmjs.com/package/tailwindcss) - A utility-first CSS framework for rapidly building custom user interfaces.
+- [autoprefixer](https://www.npmjs.com/package/autoprefixer) - Parse CSS and add vendor prefixes to CSS rules using values from the Can I Use website.
+- [postcss](https://www.npmjs.com/package/postcss) - Tool for transforming styles with JS plugins.
+
+## Useful Resources
+
+[(Back to top)](#table-of-contents)
+
+- [Documentation: OpenWeatherMap API - Current Weather Data](https://openweathermap.org/current)
+- [Documentation: OpenWeatherMap API - One Call API 1.0](https://openweathermap.org/api/one-call-api)
+- [Documentation: OpenWeatherMap API - Weather Conditions](https://openweathermap.org/weather-conditions)
+- [Documentation: Getting Started with Tailwind CSS](https://tailwindcss.com/docs/installation)
+- [Documentation: Using React Toastify](https://fkhadra.github.io/react-toastify/introduction/)
+- [Website: IconScout - Importing Icons](https://iconscout.com/unicons/explore/line)
+- [Website: Weather Icons - Alternative Option](https://erikflowers.github.io/weather-icons/)
+
+## Credits & Assets
+
+[(Back to top)](#table-of-contents)
+
+- Images are from [Unsplash](https://unsplash.com/)
+- Fonts are from [Google Fonts](https://fonts.google.com/)
