@@ -49,6 +49,7 @@ const getCurrentDetails = async (currentCity, degreeUnit) => {
 
         // Fetch weather data
         weatherData = await fetch(url).then(res => res.json()).then(data => data);
+
     } catch (error) {}
 
     const {

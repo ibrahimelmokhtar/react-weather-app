@@ -1,51 +1,72 @@
-import React, { useState } from 'react';
-import {
-	UilSearch,
-	UilLocationPoint,
-	UilExclamationTriangle,
-} from '@iconscout/react-unicons';
+import React from 'react';
+import { UilSearch, UilLocationPoint } from '@iconscout/react-unicons';
 import { getCityNameFromCoords } from '../apis/weatherAPI';
+import { toast } from 'react-toastify';
 
-const UserInput = ({ currentCity, setCurrentCity }) => {
-	// Used to display error message when the city name is empty
-	const [isCityEmpty, setIsCityEmpty] = useState(false);
-
+const UserInput = ({ userInput, setUserInput, setCurrentCity }) => {
 	// Handle change within input field
 	const handleChange = (event) => {
 		// Modify error message for city name
-		setIsCityEmpty(false);
+		setUserInput(event.target.value);
 
-		// Set current city:
-		setCurrentCity(event.target.value);
+		// Clear current city:
+		if (event.target.value === '') {
+			setCurrentCity('');
+		}
+	};
+
+	// Handle "Enter" key press
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 13) {
+			handleSearch();
+		}
 	};
 
 	// Handle click on search icon
 	const handleSearch = () => {
-		if (currentCity) {
-			// Modify error message for city name
-			setIsCityEmpty(false);
-		} else {
-			// Modify error message for city name
-			setIsCityEmpty(true);
+		// Display appropriate warning
+		if (!userInput) {
+			toast.warn('You need to specify city name.');
 		}
+
+		// Set current city
+		userInput ? setCurrentCity(userInput) : setCurrentCity('');
 	};
 
 	// Handle click on location icon
 	const handleLocation = () => {
+		// Handle geolocation success
 		const success = (position) => {
 			const { latitude: lat, longitude: lon } = position.coords;
+			toast.success('Using current location!');
 			getCityNameFromCoords(lat, lon).then((cityName) => {
+				setUserInput(cityName);
 				setCurrentCity(cityName);
 			});
+		};
 
-			// setCurrentCity(cityName);
+		// Handle geolocation errors
+		const error = (error) => {
+			switch (error.code) {
+				case error.PERMISSION_DENIED:
+					toast.error('You must give me permission!');
+					break;
+				case error.POSITION_UNAVAILABLE:
+					toast.error('Position returned an internal error!');
+					break;
+				case error.TIMEOUT:
+					toast.error('Permission was NOT obtained in allowed time!');
+					break;
+				default:
+					break;
+			}
 		};
 
 		// Fetch data for the current location
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(success);
+			navigator.geolocation.getCurrentPosition(success, error);
 		} else {
-			console.log('Can NOT access geolocation');
+			toast.error('Geolocation is NOT supported by your device!');
 		}
 	};
 
@@ -59,8 +80,9 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 					id='search-city'
 					placeholder='Search By City Name ...'
 					className='w-72 rounded border-2 py-1 px-2 capitalize text-black shadow-xl placeholder:lowercase focus:outline-none'
-					value={currentCity}
+					value={userInput}
 					onChange={handleChange}
+					onKeyDown={handleKeyDown}
 				/>
 
 				{/* Search Icon */}
@@ -83,14 +105,6 @@ const UserInput = ({ currentCity, setCurrentCity }) => {
 					<UilLocationPoint size={25} />
 				</button>
 			</div>
-
-			{/* Display appropriate message when city name is empty */}
-			{isCityEmpty && (
-				<div className='mt-4 flex items-center justify-center border-t-4 border-red-500 bg-red-100 py-2 px-4 text-lg text-red-700'>
-					<UilExclamationTriangle size={25} className='mr-2' />
-					<p>Error: You have to specify city name!</p>
-				</div>
-			)}
 		</div>
 	);
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 
-const TopCities = ({ setCurrentCity }) => {
+const TopCities = ({ setUserInput, setCurrentCity }) => {
 	const cities = ['Cairo', 'Riyadh', 'Abu Dhabi', 'London', 'Madrid', 'Oslo'];
 
 	const handleClick = (event) => {
+		setUserInput(event.target.innerText);
 		setCurrentCity(event.target.innerText);
 	};
 
