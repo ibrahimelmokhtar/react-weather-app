@@ -18,6 +18,10 @@ const UserInput = ({ userInput, setUserInput, setCurrentCity }) => {
 	// Handle "Enter" key press
 	const handleKeyDown = (event) => {
 		if (event.keyCode === 13) {
+			// blur out of input field
+			event.target.blur();
+
+			// try handling search
 			handleSearch();
 		}
 	};
@@ -30,6 +34,7 @@ const UserInput = ({ userInput, setUserInput, setCurrentCity }) => {
 		}
 
 		// Set current city
+		console.log(`userInput: ${userInput}`);
 		userInput ? setCurrentCity(userInput) : setCurrentCity('');
 	};
 

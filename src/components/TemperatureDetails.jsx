@@ -32,7 +32,7 @@ const TemperatureDetails = ({ weatherData, setDegreeUnit }) => {
 			{/* Weather details */}
 			<div className='flex flex-col items-center justify-center'>
 				{/* Weather description */}
-				<h3 className='text-xl font-medium capitalize text-indigo-600'>
+				<h3 className='text-xl font-medium capitalize text-orange-600'>
 					{weatherData.description}
 				</h3>
 
